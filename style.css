@@ -1,39 +1,61 @@
 *{
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 body{
-    background: #FC08B5;
-    box-sizing: border-box;
+    background: #5CDB95;
+    color: #EDF5E1;
+    font-family: 'Roboto', sans-serif;
 }
 .clearfix::after {
     content: "";
     clear: both;
     display: table;
-  }
-#timer{
-    float:left
 }
-#score{
-    float:right;
+#intro{
+    text-align: center;
+}
+#startBtn{
+    margin: 1em auto;
+    width: 100px;
+    padding: 1em;
+    background: #EDF5E1;
+    color: #05386B;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.labels{
+    border-bottom: 1px solid #EDF5E1;
+}
+#timerBox{
+    width: 50%;
+    float: left;
+}
+#scoreBox{
+    width: 50%;
+    float: right;
+    text-align: right;
 }
 #wrapper{
-    margin: auto;
+    margin: 1em auto;
     padding: 1em;
     max-width: 600px;
-    background:#9D05FE;
-    color: white;
-    border: 1px solid black;
+    /* height: 278px; */
+    background:#05386B;
+    color: #EDF5E1;
+    /* border: 1px solid black; */
     border-radius: 10px;
+    box-shadow: 5px 5px 5px grey;
 }
 #question{
-    font-family: 'Roboto', sans-serif;
-    margin-bottom: 1em;
+    margin: 1em 0;
 }
 #answers p{
     padding: .5em;
-    border: 1px solid black;
-    background: #FC08B5;
+    border: 1px solid#05386B;
+    background: #EDF5E1;
+    color: #05386B;
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Roboto Mono', monospace;

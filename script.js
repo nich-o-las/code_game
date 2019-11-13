@@ -10,49 +10,49 @@ var questions = [
         "correct": "<script>"
     },
     {
-        "question": "white + red =",
-        "answers": ['pink', 'green', 'silver', 'purple'],
-        "correct": "pink"
+        "question": "Which of these is NOT a way to reference colors?",
+        "answers": ['rbga value', 'hex code', 'by name', 'by emotion evoked'],
+        "correct": "by emotion evoked"
     },
     {
-        "question": "blue + yellow =",
-        "answers": ['white', 'green', 'silver', 'purple'],
-        "correct": "green"
+        "question": "How do you add a value to the end of a JavaScript array?",
+        "answers": ['.add()', '.push()', '.pop()', '.end()'],
+        "correct": ".push()"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": "How many columns are in the Bootstrap grid?",
+        "answers": ['6', '3', '12', '10'],
+        "correct": "12"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": "Which command uploads your changes to GitHub?",
+        "answers": ['git pull', 'git status', 'git push', 'git commit'],
+        "correct": "git push"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": "How do you reference the JQuery library in JavaScript?",
+        "answers": ['#', '&', '@', '$'],
+        "correct": "$"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": "How do you update text in vanilla JavaScript?",
+        "answers": ['item.textContent', 'item.content', 'item.words', 'item.innerText'],
+        "correct": "item.textContent"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": '"Local" JavaScript variables are accessible where?',
+        "answers": ['Anywhere', 'In the function where they are declared', 'In their parent functions', 'Only in "for" loops'],
+        "correct": "In the function where they are declared"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": 'What does "HTML" stand for?',
+        "answers": ['Holy Turkey Monster Lizard', 'HiT Me, Linda', 'HyperText Markup Language', 'How The Marbles Land'],
+        "correct": "HyperText Markup Language"
     },
     {
-        "question": "white + black =",
-        "answers": ['brown', 'grey', 'silver', 'purple'],
-        "correct": "grey"
+        "question": 'What does DOM stand for?',
+        "answers": ['Do Ow to Me', 'Document Object Model', "Dunkin' Or Maybe (somewhere else)", 'Donkly Onkly Monkly'],
+        "correct": "Document Object Model"
     }
 ]
 
@@ -60,21 +60,32 @@ var question = document.querySelector('#question');
 var wrapper = document.querySelector('#wrapper');
 var answerBox = document.querySelector('#answers');
 var score = document.querySelector('#score');
-var timer = document.querySelector('#timer')
+var timer = document.querySelector('#timer');
+var startBtn = document.querySelector('#startBtn')
 var index = 0;
+var isTrue;
+var time;
 
-// start the timer
-if(confirm('are you ready?')){
-    timeFunc;
-    render();
-}
+
+//stop the timer
+function stop(){
+    clearInterval(time);
+};
 
 //timer function
-var timeFunc = setInterval(function(){ 
-    timer.textContent = parseInt(timer.textContent) - 1;
-    // console.log(timer.textContent);
-    // console.log(typeof parseInt(timer.textContent));
-}, 1000);
+function timerStart(){
+    time = setInterval(function(){ 
+        timer.textContent = parseInt(timer.textContent) - 1;
+
+        //stop timer when it reaches zero
+        if((parseInt(timer.textContent)) <= 0){
+            timer.textContent = 0;
+            stop();
+            clear();
+            displayScore();
+        }
+    }, 1000);
+}
 
 // render the question and answers
 function render(){
@@ -93,37 +104,40 @@ function clear(){
     answerBox.innerHTML = '';
 }
 
-//stop the timer
-function stop(){
-    clearInterval(timeFunc);
-}
-
 //display your score
 function displayScore(){
     //if final score is your high score, save it in local storage
     var finalScore = parseInt(score.textContent);
     var localScore = localStorage.getItem('highScore');
+    var h3 = document.createElement('h1');
+    h3.setAttribute('class', 'score');
+    //if this is a new high score, save it to localStorage, and print out a congrats message
     if(localScore < finalScore){
         localStorage.setItem('highScore', finalScore);
-    }
+        h3.textContent = `Congratulations! You've reached a new high score of ${finalScore} points!`
+        wrapper.appendChild(h3);
+    } else {
     // render your score 
-    var h3 = document.createElement('h1');
     h3.textContent = `Your final score is: ${finalScore}`;
-    h3.setAttribute('class', 'score');
     wrapper.appendChild(h3);
     //render your high score
     var highScore = document.createElement('h2');
     highScore.textContent = `Your high score is: ${localScore}`;
     h3.setAttribute('class', 'score');
     wrapper.appendChild(highScore);
+    }
 }
 
-//stop the timer at zero
-//if(!(parseInt(timer.textContent) <= 0)){
-//     stop();
-//     clear();
-// }
+//when the start button is clicked
+startBtn.addEventListener('click',function(){
+    //get rid of intro screen
+    document.querySelector('#intro').style.display = 'none';
+    //start the timer
+    timerStart();
+    render();
+})
 
+//when answers are clicked
 answerBox.addEventListener('click', function(e){
     //detect whether the target is the correct answer
     var correct = e.target.textContent === questions[index].correct;
@@ -143,6 +157,7 @@ answerBox.addEventListener('click', function(e){
     }
     // if it is the end of the questions array, stop the timer
     if(index >= (questions.length - 1)){
+        timer.textContent = 0;
         stop();
         clear();
         displayScore();
