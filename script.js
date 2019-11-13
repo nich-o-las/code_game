@@ -8,12 +8,6 @@ var index = 0;
 var isTrue;
 var time;
 
-
-//stop the timer
-function stop(){
-    clearInterval(time);
-};
-
 //timer function
 function timerStart(){
     time = setInterval(function(){ 
@@ -28,6 +22,11 @@ function timerStart(){
         }
     }, 1000);
 }
+
+//stop the timer
+function stop(){
+    clearInterval(time);
+};
 
 // render the question and answers
 function render(){
@@ -51,21 +50,21 @@ function displayScore(){
     //if final score is your high score, save it in local storage
     var finalScore = parseInt(score.textContent);
     var localScore = localStorage.getItem('highScore');
-    var h3 = document.createElement('h1');
-    h3.setAttribute('class', 'score');
+    var h1 = document.createElement('h1');
+    h1.setAttribute('class', 'score');
     //if this is a new high score, save it to localStorage, and print out a congrats message
     if(localScore < finalScore){
         localStorage.setItem('highScore', finalScore);
-        h3.textContent = `Congratulations! You've reached a new high score of ${finalScore} points!`
-        wrapper.appendChild(h3);
+        h1.textContent = `Congratulations! You've reached a new high score of ${finalScore} points!`
+        wrapper.appendChild(h1);
     } else {
     // render your score 
-    h3.textContent = `Your final score is: ${finalScore}`;
-    wrapper.appendChild(h3);
+    h1.textContent = `Your final score is: ${finalScore}`;
+    wrapper.appendChild(h1);
     //render your high score
     var highScore = document.createElement('h2');
     highScore.textContent = `Your high score is: ${localScore}`;
-    h3.setAttribute('class', 'score');
+    highScore.setAttribute('class', 'score')
     wrapper.appendChild(highScore);
     }
 }
@@ -80,29 +79,41 @@ startBtn.addEventListener('click',function(){
 })
 
 //when answers are clicked
-answerBox.addEventListener('click', function(e){
+answerBox.addEventListener('mouseup', function(e){
     //detect whether the target is the correct answer
     var correct = e.target.textContent === questions[index].correct;
+        //bring on the next question
+    function nextQuestion(){
+        //clear the page, increment the index, and render everything again
+        if(index <= (questions.length - 1)){
+            index++;   
+            clear();
+            render();
+        }
+        // if it is the end of the questions array, stop the timer
+        if(index >= (questions.length - 1)){
+            timer.textContent = 0;
+            stop();
+            clear();
+            displayScore();
+        }  
+    }
 
     //if target is the correct answer, increment score
     if(correct){
+        event.target.style.backgroundColor = "#5CDB95";
         score.textContent = parseInt(score.textContent) + 1;
+        setTimeout(function(){
+            nextQuestion();
+        },500)
     //if target is not the correct answer, knock 10 seconds off the timer
     } else {
         timer.textContent = parseInt(timer.textContent) - 10;
+        e.target.style.backgroundColor = "#DB675C";
+        setTimeout(function(){
+            nextQuestion();
+        },500)
     }
-    // if it is not the end of the questions array, increment the index
-    if(index <= (questions.length - 1)){
-        index++;   
-        clear();
-        render();
-    }
-    // if it is the end of the questions array, stop the timer
-    if(index >= (questions.length - 1)){
-        timer.textContent = 0;
-        stop();
-        clear();
-        displayScore();
-    }
+    
 
 })

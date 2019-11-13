@@ -7,6 +7,7 @@ body{
     background: #5CDB95;
     color: #EDF5E1;
     font-family: 'Roboto', sans-serif;
+    font-size: 18px;
 }
 .clearfix::after {
     content: "";
@@ -48,8 +49,11 @@ body{
     border-radius: 10px;
     box-shadow: 5px 5px 5px grey;
 }
+.score{
+    text-align: center;
+}
 #question{
-    margin: 1em 0;
+    padding: .5em;
 }
 #answers p{
     padding: .5em;
