@@ -1,20 +1,39 @@
+*{
+    padding: 0;
+    margin: 0;
+}
 body{
-    background: grey;
+    background: #FC08B5;
     box-sizing: border-box;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+#timer{
+    float:left
+}
+#score{
+    float:right;
 }
 #wrapper{
     margin: auto;
+    padding: 1em;
     max-width: 600px;
-    background: white;
+    background:#9D05FE;
+    color: white;
     border: 1px solid black;
     border-radius: 10px;
 }
 #question{
     font-family: 'Roboto', sans-serif;
+    margin-bottom: 1em;
 }
 #answers p{
     padding: .5em;
     border: 1px solid black;
+    background: #FC08B5;
     border-radius: 10px;
     cursor: pointer;
     font-family: 'Roboto Mono', monospace;

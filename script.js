@@ -72,8 +72,8 @@ if(confirm('are you ready?')){
 //timer function
 var timeFunc = setInterval(function(){ 
     timer.textContent = parseInt(timer.textContent) - 1;
-    console.log(timer.textContent);
-    console.log(typeof parseInt(timer.textContent));
+    // console.log(timer.textContent);
+    // console.log(typeof parseInt(timer.textContent));
 }, 1000);
 
 // render the question and answers
@@ -100,10 +100,22 @@ function stop(){
 
 //display your score
 function displayScore(){
-    var finalScore = score.textContent;
+    //if final score is your high score, save it in local storage
+    var finalScore = parseInt(score.textContent);
+    var localScore = localStorage.getItem('highScore');
+    if(localScore < finalScore){
+        localStorage.setItem('highScore', finalScore);
+    }
+    // render your score 
     var h3 = document.createElement('h1');
     h3.textContent = `Your final score is: ${finalScore}`;
-    answerBox.appendChild(h3);
+    h3.setAttribute('class', 'score');
+    wrapper.appendChild(h3);
+    //render your high score
+    var highScore = document.createElement('h2');
+    highScore.textContent = `Your high score is: ${localScore}`;
+    h3.setAttribute('class', 'score');
+    wrapper.appendChild(highScore);
 }
 
 //stop the timer at zero
