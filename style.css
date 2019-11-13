@@ -1,1 +1,21 @@
-<
+body{
+    background: grey;
+    box-sizing: border-box;
+}
+#wrapper{
+    margin: auto;
+    max-width: 600px;
+    background: white;
+    border: 1px solid black;
+    border-radius: 10px;
+}
+#question{
+    font-family: 'Roboto', sans-serif;
+}
+#answers p{
+    padding: .5em;
+    border: 1px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Roboto Mono', monospace;
+}

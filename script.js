@@ -1,46 +1,13 @@
-/*
-Initial HTML: 
-    1. create an empty <ul> with an id of "answers".
-    2. create a timer and set the value to 60.
-
-Creating the Question objects:
-    1. create an array of objects representing each question.
-    2. within each object, create a key of "question" whose value is a question.
-    3. within each object, create a key of "answers" whose value is an array of possible answers.
-    4. within each object, create a key of "answer" whose value is the correct answer.
-
-Rendering those Questions:
-    p1. create an <h3> element.
-    p2. create a textNode of object.question 
-    p3. append textNode to h3.
-    1. shuffle the array of answers. 
-    2. loop through the shuffled array. 
-    3. in the loop, create a <li> element.
-    4. in the loop, create a text node and assign it to the item in the array.
-    5. append the text node to the li element.
-    6. append each li to the ul on the screen.
-
-Game Logic:
-    p1. create a setTimeout function that decreases the value of the timer by 1 each second.
-    1. create an event listener for clicks on the ul.
-    2. get the text content of the target.
-    3. compare the text content of the target to object.correct and store the result in a variable.
-    4. if the variable is equal to true, increment the score by 1.
-    5. if the variable is equal to false, decrement the timer by 10 seconds.
-    6. after iterating through each item of the questions array, display "game Over" and their score
-    7. compare their score with the highScore variable in local storage, and, if the new score is higher, replace the local storage variable.
-*/
-
 var questions = [
     {
-        "question": "blue + red =",
-        "answers": ['brown', 'green', 'silver', 'purple'],
-        "correct": "purple"
+        "question": "What tag do you use to reference an external CSS stylesheet?",
+        "answers": ['<link>', '<style>', '<css>', '<p>'],
+        "correct": "<link>"
     },
     {
-        "question": "yellow + red =",
-        "answers": ['brown', 'orange', 'silver', 'purple'],
-        "correct": "orange"
+        "question": "What tag do you use to reference an external JavaScript file?",
+        "answers": ['<style>', '<css>', '<script>', '<js>'],
+        "correct": "<script>"
     },
     {
         "question": "white + red =",
@@ -49,8 +16,38 @@ var questions = [
     },
     {
         "question": "blue + yellow =",
-        "answers": ['green', 'green', 'silver', 'purple'],
+        "answers": ['white', 'green', 'silver', 'purple'],
         "correct": "green"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
+    },
+    {
+        "question": "white + black =",
+        "answers": ['brown', 'grey', 'silver', 'purple'],
+        "correct": "grey"
     },
     {
         "question": "white + black =",
@@ -60,49 +57,83 @@ var questions = [
 ]
 
 var question = document.querySelector('#question');
-var ul = document.querySelector('#answers');
+var wrapper = document.querySelector('#wrapper');
+var answerBox = document.querySelector('#answers');
 var score = document.querySelector('#score');
 var timer = document.querySelector('#timer')
-
 var index = 0;
 
+// start the timer
 if(confirm('are you ready?')){
-    startTime();
+    timeFunc;
     render();
 }
 
-function startTime(){
-    setInterval(function(){ 
-        timer.textContent = parseInt(timer.textContent) - 1;
-    }, 1000);
-};
+//timer function
+var timeFunc = setInterval(function(){ 
+    timer.textContent = parseInt(timer.textContent) - 1;
+    console.log(timer.textContent);
+    console.log(typeof parseInt(timer.textContent));
+}, 1000);
 
+// render the question and answers
 function render(){
     question.textContent = questions[index].question;
     var answers = questions[index].answers;
     for(var i = 0; i < answers.length; i++){
-        var li = document.createElement('li');
-        li.textContent = answers[i];
-        ul.appendChild(li);
+        var p = document.createElement('p');
+        p.textContent = answers[i];
+        answerBox.appendChild(p);
     }
 }
 
+//clear the content
 function clear(){
-    question.textContent = questions[index].question;
-    ul.innerHTML = '';
+    question.textContent = '';
+    answerBox.innerHTML = '';
 }
 
-ul.addEventListener('click', function(e){
+//stop the timer
+function stop(){
+    clearInterval(timeFunc);
+}
+
+//display your score
+function displayScore(){
+    var finalScore = score.textContent;
+    var h3 = document.createElement('h1');
+    h3.textContent = `Your final score is: ${finalScore}`;
+    answerBox.appendChild(h3);
+}
+
+//stop the timer at zero
+//if(!(parseInt(timer.textContent) <= 0)){
+//     stop();
+//     clear();
+// }
+
+answerBox.addEventListener('click', function(e){
+    //detect whether the target is the correct answer
     var correct = e.target.textContent === questions[index].correct;
 
-    console.log(correct);
+    //if target is the correct answer, increment score
     if(correct){
         score.textContent = parseInt(score.textContent) + 1;
+    //if target is not the correct answer, knock 10 seconds off the timer
     } else {
         timer.textContent = parseInt(timer.textContent) - 10;
     }
+    // if it is not the end of the questions array, increment the index
+    if(index <= (questions.length - 1)){
+        index++;   
+        clear();
+        render();
+    }
+    // if it is the end of the questions array, stop the timer
+    if(index >= (questions.length - 1)){
+        stop();
+        clear();
+        displayScore();
+    }
 
-    index++;
-    clear();
-    render();
 })
