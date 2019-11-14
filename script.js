@@ -7,18 +7,22 @@ var startBtn = document.querySelector('#startBtn')
 var index = 0;
 var isTrue;
 var time;
+var running;
 
 //timer function
 function timerStart(){
     time = setInterval(function(){ 
         timer.textContent = parseInt(timer.textContent) - 1;
-
+        running = true;
         //stop timer when it reaches zero
         if((parseInt(timer.textContent)) <= 0){
+            running = false;
             timer.textContent = 0;
             stop();
-            clear();
-            displayScore();
+            setTimeout(function(){
+                clear();
+                displayScore();
+            },50)
         }
     }, 1000);
 }
@@ -78,32 +82,33 @@ startBtn.addEventListener('click',function(){
     render();
 })
 
+//bring on the next question
+function nextQuestion(){
+    //clear the page, increment the index, and render everything again
+    if((index <= (questions.length - 1)) && running){
+        index++;   
+        clear();
+        render();
+    }
+    // if it is the end of the questions array, stop the timer
+    if(index >= (questions.length - 1)){
+        stop();
+        clear();
+        displayScore();
+    }  
+}
+
 //when answers are clicked
 answerBox.addEventListener('mouseup', function(e){
     //detect whether the target is the correct answer
     var correct = e.target.textContent === questions[index].correct;
-        //bring on the next question
-    function nextQuestion(){
-        //clear the page, increment the index, and render everything again
-        if(index <= (questions.length - 1)){
-            index++;   
-            clear();
-            render();
-        }
-        // if it is the end of the questions array, stop the timer
-        if(index >= (questions.length - 1)){
-            timer.textContent = 0;
-            stop();
-            clear();
-            displayScore();
-        }  
-    }
 
     //if target is the correct answer, increment score
     if(correct){
         event.target.style.backgroundColor = "#5CDB95";
         score.textContent = parseInt(score.textContent) + 1;
         setTimeout(function(){
+            clear();
             nextQuestion();
         },500)
     //if target is not the correct answer, knock 10 seconds off the timer
@@ -111,6 +116,7 @@ answerBox.addEventListener('mouseup', function(e){
         timer.textContent = parseInt(timer.textContent) - 10;
         e.target.style.backgroundColor = "#DB675C";
         setTimeout(function(){
+            clear();
             nextQuestion();
         },500)
     }
