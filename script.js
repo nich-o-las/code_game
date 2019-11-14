@@ -54,23 +54,42 @@ function displayScore(){
     //if final score is your high score, save it in local storage
     var finalScore = parseInt(score.textContent);
     var localScore = localStorage.getItem('highScore');
+    var localName = localStorage.getItem('name');
     var h1 = document.createElement('h1');
+    var input = document.createElement('input');
+    var submitBtn = document.createElement('div');
     h1.setAttribute('class', 'score');
+    submitBtn.setAttribute('class', 'btn');
+    submitBtn.setAttribute('id', 'submitBtn');
+    input.setAttribute('placeholder', 'your initials here')
+    submitBtn.textContent = "submit"
+    input.setAttribute('type', 'text');
     //if this is a new high score, save it to localStorage, and print out a congrats message
-    if(localScore < finalScore){
-        localStorage.setItem('highScore', finalScore);
+    if(localScore < finalScore){       
         h1.textContent = `Congratulations! You've reached a new high score of ${finalScore} points!`
         wrapper.appendChild(h1);
+        wrapper.appendChild(input);
+        wrapper.appendChild(submitBtn);
     } else {
     // render your score 
     h1.textContent = `Your final score is: ${finalScore}`;
     wrapper.appendChild(h1);
     //render your high score
     var highScore = document.createElement('h2');
-    highScore.textContent = `Your high score is: ${localScore}`;
+    highScore.textContent = `The high score is: ${localName} with ${localScore}`;
     highScore.setAttribute('class', 'score')
     wrapper.appendChild(highScore);
     }
+    //update local storage when submit is clicked
+    submitBtn.addEventListener('click',function(){
+        var name = input.value;
+        localStorage.setItem('name', name);
+        localStorage.setItem('highScore', finalScore);
+        submitBtn.style.backgroundColor = "#5CDB95";
+        setTimeout(function(){
+            location.reload();
+        },500)
+    });
 }
 
 //when the start button is clicked
@@ -120,6 +139,4 @@ answerBox.addEventListener('mouseup', function(e){
             nextQuestion();
         },500)
     }
-    
-
 })

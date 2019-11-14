@@ -17,7 +17,7 @@ body{
 #intro{
     text-align: center;
 }
-#startBtn{
+.btn{
     margin: 1em auto;
     width: 100px;
     padding: 1em;
@@ -25,6 +25,16 @@ body{
     color: #05386B;
     border-radius: 10px;
     cursor: pointer;
+}
+input{
+    display: block;
+    margin: 1em auto 0 auto;
+    padding: 1em;
+    border-radius: 5px;
+    border: none;
+    text-align: center;
+    background: #EDF5E1;
+    color: #05386B;
 }
 .labels{
     border-bottom: 1px solid #EDF5E1;
