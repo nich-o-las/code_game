@@ -1,6 +1,6 @@
 # code_game
 
-## Code Trivia Game built using javascript, HTML, CSS, and jQuery/Javascript.
+## Code Trivia Game built using HTML, CSS, and jQuery/Javascript.
 
 ### USER STORY:
 
