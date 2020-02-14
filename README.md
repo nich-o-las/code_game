@@ -1,7 +1,12 @@
 # code_game
 
-Code quiz game containing that
-1. Increments your score if you get the answer correct.
-2. Decrements the time by 10 your score if you get the answer wrong.
-3. Displays your score at the end.
-4. If your score is the new high score, it stores it in local storage.
+## Code Trivia Game built using javascript, HTML, CSS, and jQuery/Javascript.
+
+### USER STORY:
+
+#### As a programmer, I would like to:
+1. Test my knowledge of web-based technologies.
+2. See my score incremented each time I answer a question correctly.
+2. See my remaining time decremented by 10 seconds each time I answer incorrectly.
+3. See my final score at the end of the game.
+4. I would like my high score saved in local storage.
