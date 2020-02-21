@@ -5,7 +5,6 @@
 ## Tools Used:
 1. HTML/CSS
 2. JavaScript/JQuery
-
 ### USER STORY:
 
 #### As a programmer, I would like to:
